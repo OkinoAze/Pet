@@ -14,6 +14,7 @@ public partial class Main : Node
     }
     public void Save()
     {
+        //
         ConfigFile file = new();
         file.SetValue("window", "position", GetWindow().Position);
         file.SetValue("window", "size", GetWindow().Size);
