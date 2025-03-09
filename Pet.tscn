@@ -1,0 +1,132 @@
+[gd_scene load_steps=17 format=3 uid="uid://dkbiw2qdttwva"]
+
+[ext_resource type="Script" uid="uid://d13i5mocaspws" path="res://Pet.cs" id="1_log3j"]
+[ext_resource type="Texture2D" uid="uid://dx1q7jy1js7pc" path="res://DinoSprites.png" id="2_i6as0"]
+
+[sub_resource type="Animation" id="Animation_r0du0"]
+resource_name = "fly"
+length = 0.2
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
+[sub_resource type="Animation" id="Animation_fos0i"]
+resource_name = "idel"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_3dxm6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_uu6xs"]
+resource_name = "move"
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgr22"]
+_data = {
+&"FlyIdle": SubResource("Animation_r0du0"),
+&"Idle": SubResource("Animation_fos0i"),
+&"RESET": SubResource("Animation_3dxm6"),
+&"Run": SubResource("Animation_uu6xs")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cm0pq"]
+animation = &"FlyIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fos0i"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3dxm6"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lgr22"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_trn2v"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_03owx"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wkp8b"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_20pc6"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5vvyt"]
+states/End/position = Vector2(729, 73)
+states/FlyIdle/node = SubResource("AnimationNodeAnimation_cm0pq")
+states/FlyIdle/position = Vector2(431, 38)
+states/Idle/node = SubResource("AnimationNodeAnimation_fos0i")
+states/Idle/position = Vector2(318, 100)
+states/Run/node = SubResource("AnimationNodeAnimation_3dxm6")
+states/Run/position = Vector2(386, 210)
+states/Start/position = Vector2(130, 113)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_lgr22"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_trn2v"), "Idle", "FlyIdle", SubResource("AnimationNodeStateMachineTransition_03owx"), "FlyIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_wkp8b"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_20pc6")]
+graph_offset = Vector2(-71, 6)
+
+[node name="Pet" type="Node2D"]
+script = ExtResource("1_log3j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_i6as0")
+hframes = 24
+region_rect = Rect2(28, 4, 15, 17)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lgr22")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_5vvyt")
+anim_player = NodePath("../AnimationPlayer")
