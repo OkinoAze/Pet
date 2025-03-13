@@ -1,7 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://dkbiw2qdttwva"]
+[gd_scene load_steps=19 format=3 uid="uid://dkbiw2qdttwva"]
 
 [ext_resource type="Script" uid="uid://d13i5mocaspws" path="res://Pet.cs" id="1_log3j"]
 [ext_resource type="Texture2D" uid="uid://dx1q7jy1js7pc" path="res://DinoSprites.png" id="2_i6as0"]
+[ext_resource type="Shader" uid="uid://c0xxy8wuxrglq" path="res://ChangeColor.gdshader" id="2_vwnat"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6ihe"]
+shader = ExtResource("2_vwnat")
+shader_parameter/replacement_color1 = Color(1, 1, 1, 1)
+shader_parameter/replacement_color2 = Color(1, 1, 1, 1)
 
 [sub_resource type="Animation" id="Animation_r0du0"]
 resource_name = "fly"
@@ -116,6 +122,7 @@ script = ExtResource("1_log3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
+material = SubResource("ShaderMaterial_a6ihe")
 texture = ExtResource("2_i6as0")
 hframes = 24
 region_rect = Rect2(28, 4, 15, 17)
@@ -130,3 +137,5 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_5vvyt")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="Timer" type="Timer" parent="."]

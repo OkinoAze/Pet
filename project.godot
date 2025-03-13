@@ -13,6 +13,7 @@ config_version=5
 config/name="桌宠"
 run/main_scene="uid://bm3rfs7f1y873"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 boot_splash/fullsize=false
@@ -21,6 +22,7 @@ boot_splash/use_filter=false
 [autoload]
 
 Main="*res://Main.cs"
+WindowLoad="*res://WindowLoad.cs"
 
 [display]
 
@@ -30,6 +32,7 @@ window/size/resizable=false
 window/size/borderless=true
 window/size/always_on_top=true
 window/size/transparent=true
+window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
 

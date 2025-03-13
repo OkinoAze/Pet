@@ -1,9 +1,10 @@
 using Godot;
 using System;
-using System.Collections;
+
 
 public partial class Pet : Node2D
 {
+
     float Speed = 2;
     bool EnterEnd = false;
     int StateID = 0;
@@ -15,11 +16,11 @@ public partial class Pet : Node2D
 
     Vector2I ScreenSize = Vector2I.Zero;
     Vector2I ScreenPosition = Vector2I.Zero;
-    bool Dragging = false;
+
     Vector2 MouseStartPosition = Vector2.Zero;
     Vector2 MousePosition = Vector2.Zero;
 
-
+    Window Window;
     public enum State
     {
         Idle,
@@ -57,18 +58,34 @@ public partial class Pet : Node2D
         _ = new StateRun(this, States);
         _ = new StateFlyIdle(this, States);
 
-        //GetWindow().MousePassthroughPolygon = GetNode<Polygon2D>("%WindowPolygon").Polygon;
+        //GetTree().Root.MousePassthroughPolygon = GetNode<Polygon2D>("%WindowPolygon").Polygon;
 
+        Window = GetNode<Window>("%PopWindow");
+
+        Window.CloseRequested += () =>
+        {
+            Window.Visible = false;
+        };
         ScreenSize = DisplayServer.ScreenGetSize(0);
         ScreenPosition = DisplayServer.ScreenGetPosition(0);
         Sprite = GetNode<Sprite2D>("Sprite2D");
         AnimationTree = GetNode<AnimationTree>("AnimationTree");
         StateMachine = AnimationTree.Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
+
+        ColorChange();
     }
 
+    void ColorChange()
+    {
+        Color color1 = Main.Instance.Color1;
+        Color color2 = Main.Instance.Color2;
+        (Sprite.Material as ShaderMaterial).SetShaderParameter("replacement_color1", new Vector3(color1.R, color1.G, color1.B));
+        (Sprite.Material as ShaderMaterial).SetShaderParameter("replacement_color2", new Vector3(color2.R, color2.G, color2.B));
 
+    }
     public override void _Process(double delta)
     {
+        Direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
         if (EnterEnd == false)
         {
             EnterEnd = States[StateID].Enter();
@@ -79,7 +96,10 @@ public partial class Pet : Node2D
             EnterEnd = false;
             StateID = id;
         }
-        Direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+        if (Window.Visible)
+        {
+            ColorChange();
+        }
 
     }
 
@@ -91,13 +111,26 @@ public partial class Pet : Node2D
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Left && (@event as InputEventMouseButton).Pressed)
             {
                 MouseStartPosition = GetViewport().GetMousePosition();
-                Dragging = true;
+                Main.Instance.Dragging = true;
             }
             else
             {
-                Dragging = false;
+                Main.Instance.Dragging = false;
 
             }
+            if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right && (@event as InputEventMouseButton).Pressed)
+            {
+                if (Window.Visible == false)
+                {
+                    Window.Visible = true;
+                    Window.Position = DisplayServer.MouseGetPosition();
+                }
+                else
+                {
+                    Window.Visible = false;
+                }
+            }
+
 
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Middle && (@event as InputEventMouseButton).Pressed)
             {
@@ -106,21 +139,18 @@ public partial class Pet : Node2D
             }
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.WheelUp)
             {
-                var s = GetWindow().Size;
-                GetWindow().Size = (GetWindow().Size / 24 - Vector2I.One) * 24;
-                GetWindow().Position -= (GetWindow().Size - s) / 2;
+                Main.Instance.ChangeWindowSize(-1);
 
             }
             else if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.WheelDown)
             {
-                var s = GetWindow().Size;
-                GetWindow().Size = (GetWindow().Size / 24 + Vector2I.One) * 24;
-                GetWindow().Position -= (GetWindow().Size - s) / 2;
+
+                Main.Instance.ChangeWindowSize(1);
 
             }
 
         }
-        if (@event is InputEventMouseMotion && Dragging == true)
+        if (@event is InputEventMouseMotion && Main.Instance.Dragging == true)
         {
             MousePosition = GetViewport().GetMousePosition();
             GetWindow().Position = GetWindow().Position += (Vector2I)(MousePosition - MouseStartPosition);
@@ -151,7 +181,7 @@ public partial class Pet : Node2D
             {
                 return (int)State.Run;
             }
-            if (this2D.Dragging)
+            if (Main.Instance.Dragging)
             {
                 return (int)State.FlyIdle;
             }
@@ -190,7 +220,7 @@ public partial class Pet : Node2D
         }
         public int Exit()
         {
-            if (this2D.Dragging || this2D.Direction == Vector2.Zero)
+            if (Main.Instance.Dragging || this2D.Direction == Vector2.Zero)
             {
                 return (int)State.Idle;
             }
@@ -218,7 +248,7 @@ public partial class Pet : Node2D
         }
         public int Exit()
         {
-            if (this2D.Dragging == false)
+            if (Main.Instance.Dragging == false)
             {
                 return (int)State.Idle;
             }
