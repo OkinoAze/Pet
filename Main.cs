@@ -52,6 +52,10 @@ public partial class Main : Node
         file.SetValue("Window", "scale", GetWindow().Size);
         file.SetValue("Settings", "Color1", Color1);
         file.SetValue("Settings", "Color2", Color2);
+        file.SetValue("Settings", "RandomMove", RandomMove);
+        file.SetValue("Settings", "FollowMouse", FollowMouse);
+
+
 
         file.Save("user://config.cfg");
     }
@@ -65,6 +69,8 @@ public partial class Main : Node
             GetWindow().Position = file.GetValue("Window", "position", DisplayServer.ScreenGetPosition(0) + DisplayServer.ScreenGetSize(0) / 2 - GetWindow().Size / 2).AsVector2I();
             Color1 = file.GetValue("Settings", "Color1", Colors.White).AsColor();
             Color2 = file.GetValue("Settings", "Color2", Colors.White).AsColor();
+            RandomMove = file.GetValue("Settings", "RandomMove", false).AsBool();
+            FollowMouse = file.GetValue("Settings", "FollowMouse", false).AsBool();
         }
 
     }

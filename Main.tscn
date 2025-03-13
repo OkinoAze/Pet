@@ -15,6 +15,7 @@ unique_name_in_owner = true
 transparent_bg = true
 initial_position = 4
 size = Vector2i(200, 200)
+visible = false
 transient = true
 unresizable = true
 borderless = true
@@ -22,7 +23,7 @@ transparent = true
 popup_window = true
 max_size = Vector2i(200, 200)
 
-[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "ClickThrough", "RandomMoveButton", "FollowMouseButton")]
+[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,7 +34,6 @@ script = ExtResource("2_uu6xs")
 CloseButton = NodePath("CloseButton")
 ColorPickerButton1 = NodePath("BoxContainer/HBoxContainer/ReplacePick1")
 ColorPickerButton2 = NodePath("BoxContainer/HBoxContainer/ReplacePick2")
-ClickThrough = NodePath("BoxContainer/HBoxContainer2/ClickThrough")
 RandomMoveButton = NodePath("BoxContainer/HBoxContainer4/RandomMove")
 FollowMouseButton = NodePath("BoxContainer/HBoxContainer3/FollowMouse")
 
@@ -79,18 +79,6 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 color = Color(1, 1, 1, 1)
 edit_alpha = false
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-text = "鼠标穿透"
-vertical_alignment = 1
-
-[node name="ClickThrough" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer2"]
-layout_mode = 2
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
 layout_mode = 2

@@ -5,7 +5,7 @@ using System;
 public partial class Pet : Node2D
 {
 
-    float Speed = 2;
+    float Speed = 3;
     bool EnterEnd = false;
     int StateID = 0;
     readonly IState[] States = new IState[Enum.GetNames(typeof(State)).Length];
@@ -70,6 +70,7 @@ public partial class Pet : Node2D
         };
         ScreenSize = DisplayServer.ScreenGetSize(0);
         ScreenPosition = DisplayServer.ScreenGetPosition(0);
+        GotoPosition = ScreenPosition + ScreenSize / 2;
         Sprite = GetNode<Sprite2D>("Sprite2D");
         AnimationTree = GetNode<AnimationTree>("AnimationTree");
         StateMachine = AnimationTree.Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
@@ -88,7 +89,47 @@ public partial class Pet : Node2D
     }
     public override void _Process(double delta)
     {
-        Direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+        if (Main.Instance.RandomMove)
+        {
+            var distance = (DisplayServer.WindowGetPosition() + DisplayServer.WindowGetSize() / 2).DistanceTo(GotoPosition);
+            if (distance <= (GetWindow().Size.X + GetWindow().Size.Y) / 2)
+            {
+                if (Timer.TimeLeft == 0)
+                {
+                    Timer.Start();
+                    GotoPosition = new Vector2I(GD.RandRange(ScreenPosition.X + GetWindow().Size.X / 2, ScreenPosition.X + ScreenSize.X - GetWindow().Size.X / 2), GD.RandRange(ScreenPosition.Y + GetWindow().Size.Y / 2, ScreenPosition.Y + ScreenSize.Y - GetWindow().Size.Y / 2));
+                }
+                else
+                {
+                    Direction = Vector2.Zero;
+                }
+
+            }
+            else
+            {
+                var d = distance / 400 < 1 ? 1 : distance / 400;
+                Direction = ((Vector2)DisplayServer.WindowGetPosition()).DirectionTo((Vector2)GotoPosition) * d;
+            }
+        }
+        else if (Main.Instance.FollowMouse)
+        {
+            GotoPosition = DisplayServer.MouseGetPosition();
+            var distance = (DisplayServer.WindowGetPosition() + DisplayServer.WindowGetSize() / 2).DistanceTo(GotoPosition);
+            if (distance <= (GetWindow().Size.X + GetWindow().Size.Y) / 2)
+            {
+                Direction = Vector2.Zero;
+            }
+            else
+            {
+                var d = distance / 200 < 1 ? 1 : distance / 200;
+                Direction = ((Vector2)DisplayServer.WindowGetPosition()).DirectionTo((Vector2)DisplayServer.MouseGetPosition()) * d;
+            }
+        }
+        else
+        {
+            Direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+
+        }
         if (EnterEnd == false)
         {
             EnterEnd = States[StateID].Enter();
@@ -171,6 +212,7 @@ public partial class Pet : Node2D
         public bool Enter()
         {
             this2D.StateMachine.Travel("Idle");
+            this2D.Direction = Vector2.Zero;
             return true;
         }
 
@@ -180,13 +222,14 @@ public partial class Pet : Node2D
         }
         public int Exit()
         {
-            if (this2D.Direction != Vector2.Zero)
-            {
-                return (int)State.Run;
-            }
+
             if (Main.Instance.Dragging)
             {
                 return (int)State.FlyIdle;
+            }
+            else if (this2D.Direction != Vector2.Zero)
+            {
+                return (int)State.Run;
             }
             return GetId;
         }
@@ -208,7 +251,7 @@ public partial class Pet : Node2D
 
         public int Update(double delta)
         {
-            Vector2 velocity = this2D.Direction * this2D.Speed;
+            Vector2 velocity = this2D.Direction * (this2D.Speed + Main.Instance.Scale / 5);
             if (this2D.Direction.X < 0)
             {
                 this2D.Sprite.FlipH = true;
@@ -223,7 +266,12 @@ public partial class Pet : Node2D
         }
         public int Exit()
         {
-            if (Main.Instance.Dragging || this2D.Direction == Vector2.Zero)
+            if (Main.Instance.Dragging)
+            {
+                return (int)State.FlyIdle;
+
+            }
+            else if (this2D.Direction == Vector2.Zero)
             {
                 return (int)State.Idle;
             }
@@ -242,6 +290,7 @@ public partial class Pet : Node2D
         public bool Enter()
         {
             this2D.StateMachine.Travel("FlyIdle");
+            this2D.Direction = Vector2.Zero;
             return true;
         }
 

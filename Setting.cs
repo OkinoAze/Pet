@@ -20,6 +20,8 @@ public partial class Setting : Control
         Window = GetNode<Window>("%PopWindow");
         ColorPickerButton1.Color = Main.Instance.Color1;
         ColorPickerButton2.Color = Main.Instance.Color2;
+        RandomMoveButton.ButtonPressed = Main.Instance.RandomMove;
+        FollowMouseButton.ButtonPressed = Main.Instance.FollowMouse;
         CloseButton.Pressed += () =>
         {
             Window.EmitSignal("close_requested");
@@ -27,13 +29,13 @@ public partial class Setting : Control
         RandomMoveButton.Pressed += () =>
         {
             Main.Instance.RandomMove = RandomMoveButton.ButtonPressed;
-            Main.Instance.FollowMouse = !Main.Instance.RandomMove;
+            Main.Instance.FollowMouse = false;
             FollowMouseButton.ButtonPressed = Main.Instance.FollowMouse;
         };
         FollowMouseButton.Pressed += () =>
         {
             Main.Instance.FollowMouse = FollowMouseButton.ButtonPressed;
-            Main.Instance.RandomMove = !Main.Instance.FollowMouse;
+            Main.Instance.RandomMove = false;
             RandomMoveButton.ButtonPressed = Main.Instance.RandomMove;
         };
     }
