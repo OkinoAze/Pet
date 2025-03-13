@@ -16,11 +16,13 @@ public partial class Pet : Node2D
 
     Vector2I ScreenSize = Vector2I.Zero;
     Vector2I ScreenPosition = Vector2I.Zero;
-
     Vector2 MouseStartPosition = Vector2.Zero;
     Vector2 MousePosition = Vector2.Zero;
 
     Window Window;
+
+    Timer Timer;
+    Vector2I GotoPosition = Vector2I.Zero;
     public enum State
     {
         Idle,
@@ -71,6 +73,7 @@ public partial class Pet : Node2D
         Sprite = GetNode<Sprite2D>("Sprite2D");
         AnimationTree = GetNode<AnimationTree>("AnimationTree");
         StateMachine = AnimationTree.Get("parameters/playback").As<AnimationNodeStateMachinePlayback>();
+        Timer = GetNode<Timer>("Timer");
 
         ColorChange();
     }
