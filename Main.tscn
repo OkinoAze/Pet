@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm3rfs7f1y873"]
+[gd_scene load_steps=6 format=3 uid="uid://bm3rfs7f1y873"]
 
 [ext_resource type="PackedScene" uid="uid://dkbiw2qdttwva" path="res://Pet.tscn" id="1_glv2v"]
-[ext_resource type="Script" uid="uid://ckqf00jiv80ve" path="res://Setting.cs" id="2_uu6xs"]
-[ext_resource type="Script" uid="uid://d10pd6fj4so1i" path="res://SetWindowStyle.cs" id="3_r0du0"]
+[ext_resource type="Script" uid="uid://ckqf00jiv80ve" path="res://Script/Setting.cs" id="2_uu6xs"]
+[ext_resource type="Script" uid="uid://d10pd6fj4so1i" path="res://Script/SetWindowStyle.cs" id="3_r0du0"]
+[ext_resource type="Theme" path="res://new_theme.tres" id="4_fos0i"]
+[ext_resource type="Script" uid="uid://bwrvm2tnn6flu" path="res://Script/Calculator.cs" id="5_3dxm6"]
 
 [node name="Node" type="Node"]
 script = ExtResource("3_r0du0")
@@ -15,15 +17,13 @@ unique_name_in_owner = true
 transparent_bg = true
 initial_position = 4
 size = Vector2i(200, 200)
-visible = false
 transient = true
 unresizable = true
 borderless = true
 transparent = true
 popup_window = true
-max_size = Vector2i(200, 200)
 
-[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton")]
+[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton", "CalculatorButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,8 +34,9 @@ script = ExtResource("2_uu6xs")
 CloseButton = NodePath("CloseButton")
 ColorPickerButton1 = NodePath("BoxContainer/HBoxContainer/ReplacePick1")
 ColorPickerButton2 = NodePath("BoxContainer/HBoxContainer/ReplacePick2")
-RandomMoveButton = NodePath("BoxContainer/HBoxContainer4/RandomMove")
+RandomMoveButton = NodePath("BoxContainer/HBoxContainer2/RandomMove")
 FollowMouseButton = NodePath("BoxContainer/HBoxContainer3/FollowMouse")
+CalculatorButton = NodePath("BoxContainer/HBoxContainer4/CalculatorButton")
 
 [node name="Panel" type="Panel" parent="Pet/PopWindow/Setting"]
 layout_mode = 1
@@ -80,16 +81,16 @@ layout_mode = 2
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer4"]
+[node name="Label" type="Label" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "随机移动"
 vertical_alignment = 1
 
-[node name="RandomMove" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer4"]
+[node name="RandomMove" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer2"]
 layout_mode = 2
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
@@ -104,6 +105,20 @@ vertical_alignment = 1
 [node name="FollowMouse" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HSeparator" type="HSeparator" parent="Pet/PopWindow/Setting/BoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
+layout_mode = 2
+
+[node name="CalculatorButton" type="Button" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "计算器"
+
 [node name="CloseButton" type="Button" parent="Pet/PopWindow/Setting"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 1
@@ -116,3 +131,263 @@ offset_right = -5.0
 offset_bottom = 34.0
 grow_horizontal = 0
 text = "×"
+
+[node name="PopWindow2" type="Window" parent="Pet"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "计算器"
+initial_position = 2
+size = Vector2i(320, 468)
+visible = false
+transient = true
+unresizable = true
+
+[node name="Calculator" type="Control" parent="Pet/PopWindow2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_fos0i")
+script = ExtResource("5_3dxm6")
+
+[node name="Panel" type="Panel" parent="Pet/PopWindow2/Calculator"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="Pet/PopWindow2/Calculator/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = -5.0
+offset_bottom = 463.0
+grow_horizontal = 2
+theme = ExtResource("4_fos0i")
+vertical = true
+
+[node name="公式" type="Label" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme = ExtResource("4_fos0i")
+theme_override_font_sizes/font_size = 0
+horizontal_alignment = 2
+vertical_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="输出" type="Label" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = ExtResource("4_fos0i")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 2
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="GridContainer" type="GridContainer" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+columns = 4
+
+[node name="百分号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "%"
+
+[node name="清除输入" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "CE"
+
+[node name="清除全部" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "C"
+
+[node name="退格" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "⌫"
+
+[node name="倒数" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "⅟x"
+
+[node name="平方" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "x²"
+
+[node name="开方" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "²√x"
+
+[node name="除号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "÷"
+
+[node name="按键7" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "7"
+
+[node name="按键8" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "8"
+
+[node name="按键9" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "9"
+
+[node name="乘号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "×"
+
+[node name="按键4" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "4"
+
+[node name="按键5" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "5"
+
+[node name="按键6" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "6"
+
+[node name="减号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "-"
+
+[node name="按键1" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "1"
+
+[node name="按键2" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "2"
+
+[node name="按键3" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "3"
+
+[node name="加号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "+"
+
+[node name="取反" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "+/-"
+
+[node name="按键0" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "0"
+
+[node name="点号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "."
+
+[node name="等号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_fos0i")
+text = "="

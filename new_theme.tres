@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://4vvp6ay8vx4o"]
+
+[ext_resource type="FontFile" uid="uid://ddt6n50sekbo6" path="res://Alibaba-PuHuiTi-Medium.ttf" id="1_xwdm7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0kb1c"]
+
+[resource]
+default_font = ExtResource("1_xwdm7")
+Panel/styles/panel = SubResource("StyleBoxEmpty_0kb1c")

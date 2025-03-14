@@ -21,8 +21,8 @@ boot_splash/use_filter=false
 
 [autoload]
 
-Main="*res://Main.cs"
-WindowLoad="*res://WindowLoad.cs"
+Main="*res://Script/Main.cs"
+WindowLoad="*res://Script/WindowLoad.cs"
 
 [display]
 
