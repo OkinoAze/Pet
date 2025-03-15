@@ -5,6 +5,7 @@ public partial class Setting : Control
 {
     Window Window;
     Window Window2;
+    Window Window3;
 
     [Export]
     Button CloseButton;
@@ -23,6 +24,8 @@ public partial class Setting : Control
     {
         Window = GetNode<Window>("%PopWindow");
         Window2 = GetNode<Window>("%PopWindow2");
+        Window3 = GetNode<Window>("%PopWindow3");
+
         ColorPickerButton1.Color = Main.Instance.Color1;
         ColorPickerButton2.Color = Main.Instance.Color2;
         RandomMoveButton.ButtonPressed = Main.Instance.RandomMove;
@@ -37,7 +40,10 @@ public partial class Setting : Control
         {
             Window2.Visible = false;
         };
-
+        Window3.CloseRequested += () =>
+        {
+            Window3.Visible = false;
+        };
 
         CloseButton.Pressed += () =>
         {

@@ -139,12 +139,71 @@ offset_bottom = 34.0
 grow_horizontal = 0
 text = "×"
 
+[node name="PopWindow3" type="Window" parent="Pet"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "AI对话"
+initial_position = 4
+size = Vector2i(400, 500)
+transient = true
+unresizable = true
+
+[node name="DeepSeek" type="Control" parent="Pet/PopWindow3"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Pet/PopWindow3/DeepSeek"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pet/PopWindow3/DeepSeek/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_following = true
+
+[node name="TextEdit" type="TextEdit" parent="Pet/PopWindow3/DeepSeek"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -110.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "
+"
+placeholder_text = "请输入文字"
+
 [node name="PopWindow2" type="Window" parent="Pet"]
 unique_name_in_owner = true
 auto_translate_mode = 1
 title = "计算器"
 initial_position = 2
 size = Vector2i(300, 400)
+visible = false
 transient = true
 unresizable = true
 
@@ -405,5 +464,5 @@ text = "="
 stream = SubResource("AudioStreamGenerator_03owx")
 script = ExtResource("8_trn2v")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="DeepSeekRequest" type="HTTPRequest" parent="."]
 script = ExtResource("9_03owx")

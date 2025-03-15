@@ -1,6 +1,5 @@
 using Godot;
 using System;
-
 public partial class AudioPlayer : AudioStreamPlayer
 {
     AudioStreamGeneratorPlayback PlayBack;
@@ -14,10 +13,9 @@ public partial class AudioPlayer : AudioStreamPlayer
             SampleHz = generator.MixRate;
             Play();
             PlayBack = (AudioStreamGeneratorPlayback)GetStreamPlayback();
-            //FillBuffer();
         }
 
-
+        Callable.From(FillBuffer);
     }
     public void FillBuffer()
     {
@@ -33,7 +31,6 @@ public partial class AudioPlayer : AudioStreamPlayer
 
     public override void _Process(double delta)
     {
-        //FillBuffer();
 
     }
 

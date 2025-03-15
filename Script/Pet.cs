@@ -20,7 +20,7 @@ public partial class Pet : Node2D
     Vector2 MousePosition = Vector2.Zero;
 
     Window Window;
-    Window Window2;
+
 
     Timer Timer;
     Vector2I GotoPosition = Vector2I.Zero;
@@ -61,11 +61,7 @@ public partial class Pet : Node2D
         _ = new StateRun(this, States);
         _ = new StateFlyIdle(this, States);
 
-        //GetTree().Root.MousePassthroughPolygon = GetNode<Polygon2D>("%WindowPolygon").Polygon;
-
         Window = GetNode<Window>("%PopWindow");
-        Window2 = GetNode<Window>("%PopWindow2");
-
 
         ScreenSize = DisplayServer.ScreenGetSize(0);
         ScreenPosition = DisplayServer.ScreenGetPosition(0);
