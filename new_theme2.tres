@@ -1,9 +1,9 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://m6le7trqfbv0"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bgkps8h47fsbf"]
 
-[ext_resource type="FontFile" uid="uid://ddt6n50sekbo6" path="res://Alibaba-PuHuiTi-Medium.ttf" id="1_xwdm7"]
+[ext_resource type="FontFile" uid="uid://ddt6n50sekbo6" path="res://Alibaba-PuHuiTi-Medium.ttf" id="1_ewrig"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amlv4"]
-bg_color = Color(0.1, 0.1, 0.1, 1)
+bg_color = Color(0.22, 0.22, 0.22, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -12,6 +12,6 @@ corner_radius_bottom_left = 3
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0kb1c"]
 
 [resource]
-default_font = ExtResource("1_xwdm7")
+default_font = ExtResource("1_ewrig")
 Button/styles/normal = SubResource("StyleBoxFlat_amlv4")
 Panel/styles/panel = SubResource("StyleBoxEmpty_0kb1c")

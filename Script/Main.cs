@@ -13,8 +13,11 @@ public partial class Main : Node
     public int FullScale = 1;
     public Color Color1 = Colors.White;
     public Color Color2 = Colors.White;
-    public Vector2 taskBarSize = Vector2.Zero;//任务栏大小
-    public Vector2 taskBarPos = Vector2.Zero;//任务栏位置
+    public Vector2 TaskBarSize = Vector2.Zero;//任务栏大小
+    public Vector2 TaskBarPos = Vector2.Zero;//任务栏位置
+
+    public Vector2 ForegroundWindowPos = -Vector2.One;
+    public Vector2 ForegroundWindowSize = -Vector2.One;
     public static Main Instance { get; private set; }
     Main()
     {

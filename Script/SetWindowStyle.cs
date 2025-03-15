@@ -10,6 +10,9 @@ public partial class SetWindowStyle : Node
 	#region 系统函数
 
 	[DllImport("user32.dll")]
+	static extern IntPtr GetForegroundWindow();//用于获取当前活动窗口的句柄
+
+	[DllImport("user32.dll")]
 	static extern IntPtr FindWindow(string ipClassName, string ipWindowName);//用于查找窗口的句柄
 
 
@@ -42,8 +45,8 @@ public partial class SetWindowStyle : Node
 
 	private const uint k_wsExToolWindow = 0x00000080;//设置窗体不在任务栏和任务管理器出现图标
 
-	private IntPtr m_handle;//窗口句柄
-	private IntPtr m_taskBarHandle;//窗口句柄
+	private IntPtr m_handle;//游戏窗口句柄
+	private IntPtr m_taskBarHandle;//任务栏句柄
 
 
 	#endregion
@@ -54,10 +57,10 @@ public partial class SetWindowStyle : Node
 		m_taskBarHandle = FindWindow("Shell_TrayWnd", null);
 
 		GetWindowRect(m_taskBarHandle, out RECT rect);
-		Main.Instance.taskBarSize.X = rect.Right - rect.Left;
-		Main.Instance.taskBarSize.Y = rect.Bottom - rect.Top;
-		Main.Instance.taskBarPos.X = rect.Left;
-		Main.Instance.taskBarPos.Y = rect.Top;
+		Main.Instance.TaskBarSize.X = rect.Right - rect.Left;
+		Main.Instance.TaskBarSize.Y = rect.Bottom - rect.Top;
+		Main.Instance.TaskBarPos.X = rect.Left;
+		Main.Instance.TaskBarPos.Y = rect.Top;
 
 		//在release和debug情况下都可正常获取窗口句柄
 #if DEBUG
@@ -66,9 +69,29 @@ public partial class SetWindowStyle : Node
         m_handle = FindWindow(null, GetWindow().Title);
 #endif
 		SetWindowLong(m_handle, k_gwlExStyle, k_wsExLayered | k_wsExToolWindow);
+
 	}
 
+	public override void _Process(double delta)
+	{
+		// 获取当前焦点窗口的句柄
+		IntPtr hWnd = GetForegroundWindow();
+		if (hWnd != IntPtr.Zero && hWnd != m_handle)
+		{
+			// 获取窗口的位置和大小
+			GetWindowRect(hWnd, out RECT rect);
+			Main.Instance.ForegroundWindowSize.X = rect.Right - rect.Left;
+			Main.Instance.ForegroundWindowSize.Y = rect.Bottom - rect.Top;
+			Main.Instance.ForegroundWindowPos.X = rect.Left;
+			Main.Instance.ForegroundWindowPos.Y = rect.Top;
+		}
+		else
+		{
+			Main.Instance.ForegroundWindowSize = -Vector2.One;
+			Main.Instance.ForegroundWindowPos = -Vector2.One;
+		}
 
+	}
 	/// <summary>
 	/// 设置窗口鼠标穿透
 	/// </summary>

@@ -82,21 +82,92 @@ public partial class Calculator : Control
 		btn_dot.Pressed += OnBtnDotPressed;
 
 
+		btn_percent.Pressed += OnBtnPercentPressed;
+		btn_rooting.Pressed += OnBtnRootingPressed;
+		btn_square.Pressed += OnBtnSquarePressed;
+		btn_backwards.Pressed += OnBtnBackwardsPressed;
+		btn_negation.Pressed += OnBtnNegationPressed;
 
+
+
+		btn_add.Pressed += OnBtnAddPressed;
+		btn_sub.Pressed += OnBtnSubPressed;
+		btn_multiply.Pressed += OnBtnMultiplyPressed;
+		btn_divide.Pressed += OnBtnDividePressed;
+
+		btn_equal.Pressed += OnBtnEqualPressed;
+
+		btn_clearInput.Pressed += OnBtnClearInputPressed;
 		btn_clearAll.Pressed += OnBtnClearAllPressed;
 		btn_backSpace.Pressed += OnBtnBackSpacePressed;
 
 
 	}
 
-	private void OnBtnDotPressed()
+	private void OnBtnNegationPressed()
 	{
-		if (inputText.Find(".") == -1)
-		{
-			inputText += ".";
-		}
+
 	}
 
+
+	private void OnBtnBackwardsPressed()
+	{
+
+	}
+
+
+	private void OnBtnSquarePressed()
+	{
+
+	}
+
+
+	private void OnBtnRootingPressed()
+	{
+
+	}
+
+	private void OnBtnPercentPressed()
+	{
+
+	}
+	private void OnBtnEqualPressed()
+	{
+
+	}
+
+	private void OnBtnMultiplyPressed()
+	{
+
+	}
+
+
+	private void OnBtnDividePressed()
+	{
+
+	}
+
+
+	private void OnBtnSubPressed()
+	{
+
+	}
+
+
+	private void OnBtnAddPressed()
+	{
+
+	}
+
+
+	private void OnBtnClearInputPressed()
+	{
+		inputText = "";
+
+	}
+
+
+	#region 按键
 	private void OnBtn9Pressed()
 	{
 		inputText += "9";
@@ -149,6 +220,7 @@ public partial class Calculator : Control
 		inputText += "1";
 	}
 
+
 	private void OnBtn0Pressed()
 	{
 		if (inputText.Length > 0)
@@ -156,6 +228,20 @@ public partial class Calculator : Control
 			inputText += "0";
 		}
 	}
+	#endregion
+
+	private void OnBtnDotPressed()
+	{
+		if (inputText.Find(".") == -1)
+		{
+			if (inputText == "")
+			{
+				inputText += "0";
+			}
+			inputText += ".";
+		}
+	}
+
 	private void OnBtnBackSpacePressed()
 	{
 		if (inputText.Length > 0)
@@ -171,9 +257,13 @@ public partial class Calculator : Control
 	}
 
 
+	//TODO : 完成代码
 
-
-
+	/// <summary>
+	/// 把数字格式化成带逗号的字符串
+	/// </summary>
+	/// <param name="str">输入的文本</param>
+	/// <returns></returns>
 	private string OutPutText(string str)
 	{
 		string str2 = "";
@@ -204,9 +294,9 @@ public partial class Calculator : Control
 		{
 			label_output.Text = "0";
 		}
-		else if (inputText.Length > 15)
+		else if (inputText.Length > 8)
 		{
-			inputText = inputText[..15];
+			inputText = inputText[..8];
 		}
 		else
 		{

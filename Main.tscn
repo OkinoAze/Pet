@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://bm3rfs7f1y873"]
+[gd_scene load_steps=11 format=3 uid="uid://bm3rfs7f1y873"]
 
 [ext_resource type="PackedScene" uid="uid://dkbiw2qdttwva" path="res://Pet.tscn" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://ckqf00jiv80ve" path="res://Script/Setting.cs" id="2_uu6xs"]
 [ext_resource type="Script" uid="uid://d10pd6fj4so1i" path="res://Script/SetWindowStyle.cs" id="3_r0du0"]
-[ext_resource type="Theme" path="res://new_theme.tres" id="4_fos0i"]
+[ext_resource type="Theme" uid="uid://4vvp6ay8vx4o" path="res://DefaultTheme.tres" id="4_fos0i"]
 [ext_resource type="Script" uid="uid://bwrvm2tnn6flu" path="res://Script/Calculator.cs" id="5_3dxm6"]
+[ext_resource type="Theme" uid="uid://m6le7trqfbv0" path="res://new_theme.tres" id="6_3dxm6"]
+[ext_resource type="Theme" uid="uid://bgkps8h47fsbf" path="res://new_theme2.tres" id="6_lgr22"]
+[ext_resource type="Script" uid="uid://suot1t7w80aj" path="res://Script/AudioPlayer.cs" id="8_trn2v"]
+[ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://AIChat.cs" id="9_03owx"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
 
 [node name="Node" type="Node"]
 script = ExtResource("3_r0du0")
@@ -17,6 +23,7 @@ unique_name_in_owner = true
 transparent_bg = true
 initial_position = 4
 size = Vector2i(200, 200)
+visible = false
 transient = true
 unresizable = true
 borderless = true
@@ -137,8 +144,7 @@ unique_name_in_owner = true
 auto_translate_mode = 1
 title = "计算器"
 initial_position = 2
-size = Vector2i(320, 468)
-visible = false
+size = Vector2i(300, 400)
 transient = true
 unresizable = true
 
@@ -159,16 +165,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="BoxContainer" type="BoxContainer" parent="Pet/PopWindow2/Calculator/Panel"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 5.0
-offset_top = 3.0
-offset_right = -5.0
-offset_bottom = 463.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = -7.0
+offset_bottom = -10.0
 grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("4_fos0i")
 vertical = true
 
@@ -185,10 +194,10 @@ text_overrun_behavior = 3
 
 [node name="输出" type="Label" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = ExtResource("4_fos0i")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
@@ -269,7 +278,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "7"
 
 [node name="按键8" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -277,7 +286,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "8"
 
 [node name="按键9" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -285,7 +294,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "9"
 
 [node name="乘号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -301,7 +310,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "4"
 
 [node name="按键5" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -309,7 +318,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "5"
 
 [node name="按键6" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -317,7 +326,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "6"
 
 [node name="减号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -333,7 +342,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "1"
 
 [node name="按键2" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -341,7 +350,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "2"
 
 [node name="按键3" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -349,7 +358,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "3"
 
 [node name="加号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -365,7 +374,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "+/-"
 
 [node name="按键0" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -373,7 +382,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "0"
 
 [node name="点号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -381,7 +390,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_lgr22")
 text = "."
 
 [node name="等号" type="Button" parent="Pet/PopWindow2/Calculator/Panel/BoxContainer/GridContainer"]
@@ -389,5 +398,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("4_fos0i")
+theme = ExtResource("6_3dxm6")
 text = "="
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_03owx")
+script = ExtResource("8_trn2v")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+script = ExtResource("9_03owx")
