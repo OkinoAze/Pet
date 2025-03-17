@@ -3,11 +3,19 @@ using System;
 
 public partial class AIChat : HttpRequest
 {
-    String text = "1+1";
+    [Export]
+    TextEdit Edit;
+    [Export]
+    RichTextLabel Label;
+    [Export]
+    Button Button;
+
+    bool Loading = false;
+
     public override void _Ready()
     {
         RequestCompleted += OnRequestCompleted;
-        //CallDeepSeekApi();
+        Button.Pressed += CallDeepSeekApi;
     }
     private void CallDeepSeekApi()
     {
@@ -26,14 +34,19 @@ public partial class AIChat : HttpRequest
         ""messages"": [
             {
             ""role"": ""user"",
-            ""content"": """ + text + @"""
+            ""content"": """ + Edit.Text + @"""
             }
         ],
         ""temperature"": 0.7,
         ""max_tokens"": 100
         }";
-
-        Request(url, headers, HttpClient.Method.Post, requestBody);
+        if (!Loading && Edit.Text != "")
+        {
+            Loading = true;
+            Label.Text = "Loading...";
+            Edit.Text = "";
+            Request(url, headers, HttpClient.Method.Post, requestBody);
+        }
     }
     public override void _Process(double delta)
     {
@@ -45,7 +58,14 @@ public partial class AIChat : HttpRequest
         var json = new Json();
         json.Parse(body.GetStringFromUtf8());
         var response = json.Data.AsGodotDictionary();
-        GD.Print(response["choices"].AsGodotArray()[0].AsGodotDictionary()["message"].AsGodotDictionary()["content"].AsString());
-
+        if (response.Count > 0)
+        {
+            Label.Text = response["choices"].AsGodotArray()[0].AsGodotDictionary()["message"].AsGodotDictionary()["content"].AsString();
+        }
+        else
+        {
+            Label.Text = "暂时无法回复";
+        }
+        Loading = false;
     }
 }

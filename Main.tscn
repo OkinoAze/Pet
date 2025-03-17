@@ -8,7 +8,7 @@
 [ext_resource type="Theme" uid="uid://m6le7trqfbv0" path="res://new_theme.tres" id="6_3dxm6"]
 [ext_resource type="Theme" uid="uid://bgkps8h47fsbf" path="res://new_theme2.tres" id="6_lgr22"]
 [ext_resource type="Script" uid="uid://suot1t7w80aj" path="res://Script/AudioPlayer.cs" id="8_trn2v"]
-[ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://AIChat.cs" id="9_03owx"]
+[ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://Script/AIChat.cs" id="9_03owx"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
 
@@ -30,7 +30,7 @@ borderless = true
 transparent = true
 popup_window = true
 
-[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton", "CalculatorButton")]
+[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton", "CalculatorButton", "AIChatButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +44,7 @@ ColorPickerButton2 = NodePath("BoxContainer/HBoxContainer/ReplacePick2")
 RandomMoveButton = NodePath("BoxContainer/HBoxContainer2/RandomMove")
 FollowMouseButton = NodePath("BoxContainer/HBoxContainer3/FollowMouse")
 CalculatorButton = NodePath("BoxContainer/HBoxContainer4/CalculatorButton")
+AIChatButton = NodePath("BoxContainer/HBoxContainer4/AIChatButton")
 
 [node name="Panel" type="Panel" parent="Pet/PopWindow/Setting"]
 layout_mode = 1
@@ -120,11 +121,18 @@ theme_override_constants/separation = 15
 layout_mode = 2
 
 [node name="CalculatorButton" type="Button" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(100, 30)
+custom_minimum_size = Vector2(70, 30)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "计算器"
+
+[node name="AIChatButton" type="Button" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(70, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "AI对话"
 
 [node name="CloseButton" type="Button" parent="Pet/PopWindow/Setting"]
 custom_minimum_size = Vector2(30, 30)
@@ -138,64 +146,6 @@ offset_right = -5.0
 offset_bottom = 34.0
 grow_horizontal = 0
 text = "×"
-
-[node name="PopWindow3" type="Window" parent="Pet"]
-unique_name_in_owner = true
-auto_translate_mode = 1
-title = "AI对话"
-initial_position = 4
-size = Vector2i(400, 500)
-transient = true
-unresizable = true
-
-[node name="DeepSeek" type="Control" parent="Pet/PopWindow3"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Pet/PopWindow3/DeepSeek"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -140.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Pet/PopWindow3/DeepSeek/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-scroll_following = true
-
-[node name="TextEdit" type="TextEdit" parent="Pet/PopWindow3/DeepSeek"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = -110.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "
-"
-placeholder_text = "请输入文字"
 
 [node name="PopWindow2" type="Window" parent="Pet"]
 unique_name_in_owner = true
@@ -245,7 +195,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme = ExtResource("4_fos0i")
-theme_override_font_sizes/font_size = 0
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 2
 vertical_alignment = 2
 clip_text = true
@@ -460,9 +410,85 @@ size_flags_vertical = 3
 theme = ExtResource("6_3dxm6")
 text = "="
 
+[node name="PopWindow3" type="Window" parent="Pet"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "AI对话"
+initial_position = 4
+size = Vector2i(400, 500)
+visible = false
+transient = true
+unresizable = true
+
+[node name="DeepSeek" type="Control" parent="Pet/PopWindow3"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Pet/PopWindow3/DeepSeek"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -170.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Pet/PopWindow3/DeepSeek/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_following = true
+
+[node name="TextEdit" type="TextEdit" parent="Pet/PopWindow3/DeepSeek"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -145.0
+offset_right = -10.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "请输入文字"
+
+[node name="Button" type="Button" parent="Pet/PopWindow3/DeepSeek"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -40.0
+offset_right = -10.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "发送"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_03owx")
+pitch_scale = 2.0
 script = ExtResource("8_trn2v")
 
-[node name="DeepSeekRequest" type="HTTPRequest" parent="."]
+[node name="DeepSeekRequest" type="HTTPRequest" parent="." node_paths=PackedStringArray("Edit", "Label", "Button")]
 script = ExtResource("9_03owx")
+Edit = NodePath("../Pet/PopWindow3/DeepSeek/TextEdit")
+Label = NodePath("../Pet/PopWindow3/DeepSeek/Panel/RichTextLabel")
+Button = NodePath("../Pet/PopWindow3/DeepSeek/Button")

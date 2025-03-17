@@ -14,8 +14,6 @@ public partial class AudioPlayer : AudioStreamPlayer
             Play();
             PlayBack = (AudioStreamGeneratorPlayback)GetStreamPlayback();
         }
-
-        Callable.From(FillBuffer);
     }
     public void FillBuffer()
     {
@@ -31,7 +29,10 @@ public partial class AudioPlayer : AudioStreamPlayer
 
     public override void _Process(double delta)
     {
-
+        if (Input.IsActionJustPressed("ui_focus_next"))
+        {
+            FillBuffer();
+        }
     }
 
 }

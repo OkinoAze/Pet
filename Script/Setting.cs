@@ -19,6 +19,8 @@ public partial class Setting : Control
     Button FollowMouseButton;
     [Export]
     Button CalculatorButton;
+    [Export]
+    Button AIChatButton;
 
     public override void _Ready()
     {
@@ -67,6 +69,10 @@ public partial class Setting : Control
         CalculatorButton.Pressed += () =>
         {
             Window2.Visible = !Window2.Visible;
+        };
+        AIChatButton.Pressed += () =>
+        {
+            Window3.Visible = !Window3.Visible;
         };
 
 

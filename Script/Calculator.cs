@@ -5,8 +5,9 @@ public partial class Calculator : Control
 {
 	string inputText = "";
 	string formulaText = "";
-	double num1 = 0;
-	double num2 = 0;
+	float num1 = 0;
+	float num2 = 0;
+	string operation = "";
 	Label label_output;
 	Label label_formula;
 
@@ -20,9 +21,9 @@ public partial class Calculator : Control
 	Button btn_multiply;
 	Button btn_equal;
 	Button btn_dot;
-	Button btn_rooting;
+	Button btn_pow;
 	Button btn_square;
-	Button btn_backwards;
+	Button btn_reciprocal;
 	Button btn_negation;
 
 	Button btn_0;
@@ -63,9 +64,9 @@ public partial class Calculator : Control
 		btn_multiply = GetNode<Button>("%乘号");
 		btn_equal = GetNode<Button>("%等号");
 		btn_dot = GetNode<Button>("%点号");
-		btn_rooting = GetNode<Button>("%开方");
-		btn_square = GetNode<Button>("%平方");
-		btn_backwards = GetNode<Button>("%倒数");
+		btn_square = GetNode<Button>("%开方");
+		btn_pow = GetNode<Button>("%平方");
+		btn_reciprocal = GetNode<Button>("%倒数");
 		btn_negation = GetNode<Button>("%取反");
 
 		btn_0.Pressed += OnBtn0Pressed;
@@ -83,9 +84,9 @@ public partial class Calculator : Control
 
 
 		btn_percent.Pressed += OnBtnPercentPressed;
-		btn_rooting.Pressed += OnBtnRootingPressed;
+		btn_pow.Pressed += OnBtnPowPressed;
 		btn_square.Pressed += OnBtnSquarePressed;
-		btn_backwards.Pressed += OnBtnBackwardsPressed;
+		btn_reciprocal.Pressed += OnBtnReciprocalPressed;
 		btn_negation.Pressed += OnBtnNegationPressed;
 
 
@@ -106,57 +107,88 @@ public partial class Calculator : Control
 
 	private void OnBtnNegationPressed()
 	{
+		inputText = (-double.Parse(inputText)).ToString();
 
 	}
 
 
-	private void OnBtnBackwardsPressed()
+	private void OnBtnReciprocalPressed()
 	{
+		inputText = MathF.ReciprocalEstimate(float.Parse(inputText)).ToString();
 
 	}
 
 
 	private void OnBtnSquarePressed()
 	{
-
+		inputText = MathF.Sqrt(float.Parse(inputText)).ToString();
 	}
 
 
-	private void OnBtnRootingPressed()
+	private void OnBtnPowPressed()
 	{
+		inputText = MathF.Pow(float.Parse(inputText), 2).ToString();
 
 	}
 
 	private void OnBtnPercentPressed()
 	{
+		if (formulaText != "" && inputText != "")
+		{
+			inputText = (num1 * double.Parse(inputText) / 100).ToString();
+		}
 
 	}
 	private void OnBtnEqualPressed()
 	{
-
+		if (inputText != "" && formulaText != "")
+		{
+			num2 = float.Parse(inputText);
+			if (operation == "+")
+			{
+				num1 += num2;
+			}
+			else if (operation == "-")
+			{
+				num1 -= num2;
+			}
+			else if (operation == "×")
+			{
+				num1 *= num2;
+			}
+			else if (operation == "÷")
+			{
+				num1 /= num2;
+			}
+			inputText = num1.ToString();
+			formulaText = "";
+			num2 = 0;
+			operation = "";
+		}
 	}
 
 	private void OnBtnMultiplyPressed()
 	{
+		Count("×");
 
 	}
 
 
 	private void OnBtnDividePressed()
 	{
-
+		Count("÷");
 	}
 
 
 	private void OnBtnSubPressed()
 	{
-
+		Count("-");
 	}
 
 
 	private void OnBtnAddPressed()
 	{
-
+		Count("+");
 	}
 
 
@@ -166,6 +198,42 @@ public partial class Calculator : Control
 
 	}
 
+	private void Count(string _o)
+	{
+		if (inputText != "" && formulaText != "")
+		{
+			num2 = float.Parse(inputText);
+			if (operation == "+")
+			{
+				num1 += num2;
+			}
+			else if (operation == "-")
+			{
+				num1 -= num2;
+			}
+			else if (operation == "×")
+			{
+				num1 *= num2;
+			}
+			else if (operation == "÷")
+			{
+				num1 /= num2;
+			}
+			operation = _o;
+			formulaText = num1.ToString();
+			num2 = 0;
+			inputText = "";
+			return;
+		}
+		operation = _o;
+		if (inputText != "")
+		{
+			formulaText = inputText;
+			num1 = float.Parse(formulaText);
+			inputText = "";
+		}
+
+	}
 
 	#region 按键
 	private void OnBtn9Pressed()
@@ -253,7 +321,10 @@ public partial class Calculator : Control
 
 	private void OnBtnClearAllPressed()
 	{
+		formulaText = "";
 		inputText = "";
+		operation = "";
+
 	}
 
 
@@ -290,11 +361,7 @@ public partial class Calculator : Control
 
 	public override void _Process(double delta)
 	{
-		if (inputText == "")
-		{
-			label_output.Text = "0";
-		}
-		else if (inputText.Length > 8)
+		if (inputText.Length > 8)
 		{
 			inputText = inputText[..8];
 		}
@@ -302,6 +369,14 @@ public partial class Calculator : Control
 		{
 			label_output.Text = OutPutText(inputText);
 
+		}
+		if (formulaText != "")
+		{
+			label_formula.Text = formulaText + operation;
+		}
+		else
+		{
+			label_formula.Text = "";
 		}
 	}
 }
