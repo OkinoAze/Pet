@@ -2,10 +2,10 @@ using Godot;
 using System;
 public partial class AudioPlayer : AudioStreamPlayer
 {
-    AudioStreamGeneratorPlayback PlayBack;
-    float SampleHz;
-    float PulseHz = 440;
-    double Phase = 0;
+    AudioStreamGeneratorPlayback PlayBack;// 生成器回放
+    float SampleHz;//采样率
+    float PulseHz = 200;//正弦波频率
+    double Phase = 0;//相位，用于计算正弦波
     public override void _Ready()
     {
         if (Stream is AudioStreamGenerator generator) // 键入生成器以访问混合率

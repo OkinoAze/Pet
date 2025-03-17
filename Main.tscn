@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://Script/AIChat.cs" id="9_03owx"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
+buffer_length = 0.3
 
 [node name="Node" type="Node"]
 script = ExtResource("3_r0du0")
@@ -484,7 +485,6 @@ text = "发送"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_03owx")
-pitch_scale = 2.0
 script = ExtResource("8_trn2v")
 
 [node name="DeepSeekRequest" type="HTTPRequest" parent="." node_paths=PackedStringArray("Edit", "Label", "Button")]
