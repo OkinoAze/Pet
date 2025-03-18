@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bm3rfs7f1y873"]
+[gd_scene load_steps=12 format=3 uid="uid://bm3rfs7f1y873"]
 
 [ext_resource type="PackedScene" uid="uid://dkbiw2qdttwva" path="res://Pet.tscn" id="1_glv2v"]
 [ext_resource type="Script" uid="uid://ckqf00jiv80ve" path="res://Script/Setting.cs" id="2_uu6xs"]
@@ -13,6 +13,10 @@
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
 buffer_length = 0.3
 
+[sub_resource type="Curve" id="Curve_03owx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.364286, 0.818115), 0.0, 0.0, 0, 0, Vector2(0.7, 0.760677), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.0143, 0.0, 1, 0]
+point_count = 4
+
 [node name="Node" type="Node"]
 script = ExtResource("3_r0du0")
 
@@ -23,15 +27,14 @@ position = Vector2(12, 12)
 unique_name_in_owner = true
 transparent_bg = true
 initial_position = 4
-size = Vector2i(200, 200)
-visible = false
+size = Vector2i(200, 230)
 transient = true
 unresizable = true
 borderless = true
 transparent = true
 popup_window = true
 
-[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton", "CalculatorButton", "AIChatButton")]
+[node name="Setting" type="Control" parent="Pet/PopWindow" node_paths=PackedStringArray("CloseButton", "ColorPickerButton1", "ColorPickerButton2", "RandomMoveButton", "FollowMouseButton", "CalculatorButton", "AIChatButton", "KeyboardPlay")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,6 +49,7 @@ RandomMoveButton = NodePath("BoxContainer/HBoxContainer2/RandomMove")
 FollowMouseButton = NodePath("BoxContainer/HBoxContainer3/FollowMouse")
 CalculatorButton = NodePath("BoxContainer/HBoxContainer4/CalculatorButton")
 AIChatButton = NodePath("BoxContainer/HBoxContainer4/AIChatButton")
+KeyboardPlay = NodePath("BoxContainer/HBoxContainer5/KeyboardPlay")
 
 [node name="Panel" type="Panel" parent="Pet/PopWindow/Setting"]
 layout_mode = 1
@@ -114,9 +118,20 @@ vertical_alignment = 1
 [node name="FollowMouse" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer3"]
 layout_mode = 2
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer5"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "键盘演奏(A-H)"
+vertical_alignment = 1
+
+[node name="KeyboardPlay" type="CheckButton" parent="Pet/PopWindow/Setting/BoxContainer/HBoxContainer5"]
+layout_mode = 2
+
 [node name="HSeparator" type="HSeparator" parent="Pet/PopWindow/Setting/BoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="Pet/PopWindow/Setting/BoxContainer"]
 layout_mode = 2
@@ -486,6 +501,7 @@ text = "发送"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_03owx")
 script = ExtResource("8_trn2v")
+AudioCurve = SubResource("Curve_03owx")
 
 [node name="DeepSeekRequest" type="HTTPRequest" parent="." node_paths=PackedStringArray("Edit", "Label", "Button")]
 script = ExtResource("9_03owx")

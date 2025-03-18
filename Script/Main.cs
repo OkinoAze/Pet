@@ -19,6 +19,9 @@ public partial class Main : Node
     public Vector2 ForegroundWindowPos = -Vector2.One;
     public Vector2 ForegroundWindowSize = -Vector2.One;
     public static Main Instance { get; private set; }
+    public bool KeyboardPlay;
+
+
     Main()
     {
         Instance = this;
@@ -59,8 +62,7 @@ public partial class Main : Node
         file.SetValue("Settings", "Color2", Color2);
         file.SetValue("Settings", "RandomMove", RandomMove);
         file.SetValue("Settings", "FollowMouse", FollowMouse);
-
-
+        file.SetValue("Settings", "KeyboardPlay", KeyboardPlay);
 
         file.Save("user://config.cfg");
     }
@@ -76,6 +78,7 @@ public partial class Main : Node
             Color2 = file.GetValue("Settings", "Color2", Colors.White).AsColor();
             RandomMove = file.GetValue("Settings", "RandomMove", false).AsBool();
             FollowMouse = file.GetValue("Settings", "FollowMouse", false).AsBool();
+            KeyboardPlay = file.GetValue("Settings", "KeyboardPlay", false).AsBool();
         }
 
     }

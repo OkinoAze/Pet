@@ -21,6 +21,8 @@ public partial class Setting : Control
     Button CalculatorButton;
     [Export]
     Button AIChatButton;
+    [Export]
+    Button KeyboardPlay;
 
     public override void _Ready()
     {
@@ -32,6 +34,7 @@ public partial class Setting : Control
         ColorPickerButton2.Color = Main.Instance.Color2;
         RandomMoveButton.ButtonPressed = Main.Instance.RandomMove;
         FollowMouseButton.ButtonPressed = Main.Instance.FollowMouse;
+        KeyboardPlay.ButtonPressed = Main.Instance.KeyboardPlay;
 
         Window.CloseRequested += () =>
         {
@@ -66,6 +69,10 @@ public partial class Setting : Control
             RandomMoveButton.ButtonPressed = Main.Instance.RandomMove;
         };
 
+        KeyboardPlay.Pressed += () =>
+        {
+            Main.Instance.KeyboardPlay = KeyboardPlay.ButtonPressed;
+        };
         CalculatorButton.Pressed += () =>
         {
             Window2.Visible = !Window2.Visible;
@@ -84,6 +91,15 @@ public partial class Setting : Control
         {
             Main.Instance.Color1 = ColorPickerButton1.Color;
             Main.Instance.Color2 = ColorPickerButton2.Color;
+            if (Input.IsKeyPressed(Key.Escape))
+            {
+                Window.Visible = false;
+            }
+        }
+        if (Window3.Visible)
+        {
+            Main.Instance.KeyboardPlay = false;
+            KeyboardPlay.ButtonPressed = Main.Instance.KeyboardPlay;
         }
     }
 }
