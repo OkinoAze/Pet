@@ -11,11 +11,11 @@
 [ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://Script/AIChat.cs" id="9_03owx"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
-buffer_length = 0.3
+buffer_length = 0.6
 
 [sub_resource type="Curve" id="Curve_03owx"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.364286, 0.818115), 0.0, 0.0, 0, 0, Vector2(0.7, 0.760677), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.0143, 0.0, 1, 0]
-point_count = 4
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [node name="Node" type="Node"]
 script = ExtResource("3_r0du0")
@@ -28,6 +28,7 @@ unique_name_in_owner = true
 transparent_bg = true
 initial_position = 4
 size = Vector2i(200, 230)
+visible = false
 transient = true
 unresizable = true
 borderless = true

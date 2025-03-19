@@ -6,8 +6,9 @@ public partial class AudioPlayer : AudioStreamPlayer
     Curve AudioCurve; // 曲线
     AudioStreamGeneratorPlayback PlayBack;// 生成器回放
     float SampleHz;//采样率
-    float PulseHz = 440;//正弦波频率 A4
-    double Phase = 0;//相位，用于计算正弦波
+    float PulseHz = 440;//频率 A4
+    double Phase = 0;//相位
+
     public override void _Ready()
     {
         if (Stream is AudioStreamGenerator generator) // 键入生成器以访问混合率
@@ -22,14 +23,24 @@ public partial class AudioPlayer : AudioStreamPlayer
     {
         float increment = PulseHz / SampleHz;
         int framesAvailable = PlayBack.GetFramesAvailable();
+
         for (int i = 0; i < framesAvailable; i++)
         {
-            // 计算正弦波值
-            var data = (float)Mathf.Sin(Phase * Mathf.Tau);
+
+
+            float sinWaveValue = (float)Mathf.Sin(Phase * Mathf.Tau);// 正弦波
+            /*
+            float squareWaveValue = Phase < 0.5f ? 1.0f : -1.0f;//方波
+            float triangleWaveValue = Phase < 0.5f ? (float)(4.0f * Phase - 1.0f) : (float)(3.0f - 4.0f * Phase); //三角波
+            float sawtoothWaveValue = (float)(Phase - Mathf.Floor(Phase));//锯齿波
+            float pulseWaveValue = Phase < 0.2f ? 1.0f : 0.0f;// 脉冲波，范围：0到1
+            */
+            var data = sinWaveValue;
 
             // 使用曲线来调整振幅，这里曲线已经归一化到0到1之间
             float curveValue = AudioCurve.Sample((float)Phase); // 根据相位获取曲线值
-            data *= curveValue; // 调整正弦波振幅
+
+            data *= curveValue; // 混合振幅
 
             // 将数据推送到缓冲区
             PlayBack.PushFrame(Vector2.One * data);
