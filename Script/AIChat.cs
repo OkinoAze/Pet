@@ -20,7 +20,7 @@ public partial class AIChat : HttpRequest
     private void CallDeepSeekApi()
     {
         string url = "https://api.deepseek.com/v1/chat/completions";
-        string apiKey = ""; //输入APIKey
+        string apiKey = ""; //输入DeepSeek APIKey
 
         string[] headers =
          [
