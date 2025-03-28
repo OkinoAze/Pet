@@ -24,6 +24,8 @@ public partial class AudioPlayer : AudioStreamPlayer
         float increment = PulseHz / SampleHz;
         int framesAvailable = PlayBack.GetFramesAvailable();
 
+
+
         for (int i = 0; i < framesAvailable; i++)
         {
 
@@ -35,12 +37,8 @@ public partial class AudioPlayer : AudioStreamPlayer
             float sawtoothWaveValue = (float)(Phase - Mathf.Floor(Phase));//锯齿波
             float pulseWaveValue = Phase < 0.2f ? 1.0f : 0.0f;// 脉冲波，范围：0到1
             */
-            var data = sinWaveValue;
+            var data = sinWaveValue * AudioCurve.Sample((float)Phase);
 
-            // 使用曲线来调整振幅，这里曲线已经归一化到0到1之间
-            float curveValue = AudioCurve.Sample((float)Phase); // 根据相位获取曲线值
-
-            data *= curveValue; // 混合振幅
 
             // 将数据推送到缓冲区
             PlayBack.PushFrame(Vector2.One * data);
@@ -48,6 +46,8 @@ public partial class AudioPlayer : AudioStreamPlayer
             // 更新相位
             Phase = Mathf.PosMod(Phase + increment, 1.0);
         }
+
+
     }
 
     public override void _Process(double delta)

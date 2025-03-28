@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://dta0lls0q7k5x" path="res://Script/AIChat.cs" id="9_03owx"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_03owx"]
-buffer_length = 0.6
 
 [sub_resource type="Curve" id="Curve_03owx"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0]

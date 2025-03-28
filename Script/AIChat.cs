@@ -20,7 +20,7 @@ public partial class AIChat : HttpRequest
     private void CallDeepSeekApi()
     {
         string url = "https://api.deepseek.com/v1/chat/completions";
-        string apiKey = "sk-58a7183093a345aea3b7dfdf0072dd18";
+        string apiKey = ""; //输入APIKey
 
         string[] headers =
          [
@@ -40,6 +40,7 @@ public partial class AIChat : HttpRequest
         ""temperature"": 0.7,
         ""max_tokens"": 100
         }";
+        //发送请求并等待响应
         if (!Loading && Edit.Text != "")
         {
             Loading = true;

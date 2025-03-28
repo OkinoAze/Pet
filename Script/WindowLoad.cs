@@ -16,6 +16,7 @@ public partial class WindowLoad : Node
 	public override async void _Process(double delta)
 	{
 		DetectPassThrough();
+		//等待一段时间后，将鼠标设置为可穿透，减少内存占用
 		await ToSignal(GetTree().CreateTimer(Main.Instance.ClickThroughTime), "timeout");
 	}
 	//设置鼠标可穿透的最小透明度
