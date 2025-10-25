@@ -80,6 +80,11 @@ public partial class Main : Node
             FollowMouse = file.GetValue("Settings", "FollowMouse", false).AsBool();
             KeyboardPlay = file.GetValue("Settings", "KeyboardPlay", false).AsBool();
         }
+        else
+        {
+            GetWindow().Size = WindowSize * Scale;
+        }
+
 
     }
 

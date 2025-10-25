@@ -49,16 +49,16 @@ public partial class WindowLoad : Node
 		}
 	}
 
-	bool clickthrough = true;
+	bool clickThrough = true;
 
 	/// <summary>
 	/// 调用Windows系统API来设置鼠标穿透，但目前只支持Windows
 	/// </summary>
 	private void SetClickAbility(bool clickable)
 	{
-		if (clickable != clickthrough)
+		if (clickable != clickThrough)
 		{
-			clickthrough = clickable;
+			clickThrough = clickable;
 			_mouseClickThrough.SetClickThrough(!clickable);
 		}
 	}
